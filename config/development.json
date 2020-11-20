@@ -1,0 +1,11 @@
+{
+  "db" : {
+    "host" : "localhost",
+    "username" : "pmsdev",
+    "password" : "dev",
+    "synchronize" : true
+  },
+  "jwt" : {
+    "secret" : "topSecret51"
+  }
+}

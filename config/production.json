@@ -1,0 +1,8 @@
+{
+  "server" : {
+    "origin" : "http://pms.highestmerit.com"
+  },
+  "db" : {
+    "synchronize" : false
+  }
+}
