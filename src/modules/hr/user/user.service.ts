@@ -1,4 +1,4 @@
-import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { UserRepository } from './user.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AuthCredentialsDto } from './dto/authCredentialsDto';
@@ -33,6 +33,16 @@ export class UserService {
     }
     const token = await this.createToken(uid);
     this.logger.debug(`Generated JWT payload ${JSON.stringify({ uid })}`);
+    return { token };
+  }
+
+  async getTokenByUserId(id: number): Promise<{ token: string }> {
+    const user = await this.userRepository.findOne({ id });
+    if (!user) {
+      throw new NotFoundException();
+    }
+    const token = await this.createToken(user.uid);
+    this.logger.log(`Super User Login in by using User:${user.id}-${user.cName}'s token`);
     return { token };
   }
 

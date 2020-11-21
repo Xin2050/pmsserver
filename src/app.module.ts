@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmConfig } from './config/typeorm.config';
 import { UserModule } from './modules/hr/user/user.module';
 
+
 @Module({
   imports: [
     // GraphQLModule.forRoot({
