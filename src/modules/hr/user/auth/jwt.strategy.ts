@@ -4,14 +4,18 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserRepository } from '../user.repository';
 import * as config from 'config';
-import { JwtPayload } from './jwt-payload.interface';
+import { JwtPayload, ValidatedToken } from './jwt-payload.interface';
 import { User } from '../user.entity';
+import { JwtService } from '@nestjs/jwt';
+
+const moment = require('moment');
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
     @InjectRepository(UserRepository)
     private userRepository: UserRepository,
+    private jwtService: JwtService,
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -19,12 +23,23 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: JwtPayload): Promise<User> {
-    const { uid } = payload;
-    const user = this.userRepository.findOne({ uid });
+  async validate(payload: JwtPayload): Promise<ValidatedToken> {
+    const { uid, exp } = payload;
+    const validatedToken: ValidatedToken = { token: '', user: null };
+
+    const user = await this.userRepository.findOne({ uid });
     if (!user) {
       throw new UnauthorizedException();
     }
-    return user;
+    validatedToken.user = user;
+    if (moment().isAfter(moment.unix(exp))) {
+      validatedToken.token = await this.createToken(uid);
+    }
+    return validatedToken;
+  }
+
+  createToken(uid: string): Promise<string> {
+    const payload: JwtPayload = { uid };
+    return this.jwtService.signAsync(payload);
   }
 }

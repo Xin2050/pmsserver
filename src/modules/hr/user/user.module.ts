@@ -21,7 +21,7 @@ const jwtConfig = config.get('jwt');
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
       secret: process.env.JWT_SECRET || jwtConfig.secret,
-      signOptions: jwtConfig.expiresIn,
+      signOptions: { expiresIn: jwtConfig.expiresIn },
     }),
     TypeOrmModule.forFeature([UserRepository]),
   ],
@@ -29,4 +29,5 @@ const jwtConfig = config.get('jwt');
   providers: [UserService, UserResolver, JwtStrategy],
   exports: [JwtStrategy, PassportModule],
 })
-export class UserModule {}
+export class UserModule {
+}
