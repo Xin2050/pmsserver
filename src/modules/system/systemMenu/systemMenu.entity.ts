@@ -8,6 +8,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { SystemMenuOperationType } from './systemMenu.enum';
+import { Status } from '../../../sw/enums/RecordStatusEnum';
 
 @Entity('SystemMenu')
 export class SystemMenu {
@@ -37,4 +38,10 @@ export class SystemMenu {
     default: SystemMenuOperationType.Read,
   })
   operationType: SystemMenuOperationType;
+
+  @Column('enum',{
+    enum: Status,
+    default:Status.Enabled,
+  })
+  status : Status
 }
