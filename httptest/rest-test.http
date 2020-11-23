@@ -1,0 +1,32 @@
+###Login
+POST {{host}}/auth/signin
+Content-Type: application/json
+
+{
+"email": "{{email}}",
+"password": "{{password}}"
+}
+
+> {% client.global.set("auth_token",response.body.token) %}
+
+###Check Auth
+POST {{host}}/auth/authCheck
+Authorization: Bearer {{auth_token}}
+
+###Graphql FunctionCreate
+
+
+`
+mutation CsystemMenu($csminput: CreateSystemMenuInputs!) {
+  createSystemMenu(cSMI:$csminput) {
+    id
+    name
+    parentId
+    router
+    icon
+    orderKey
+    directlyAccess
+    operationType
+  }
+}
+`
