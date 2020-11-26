@@ -1,7 +1,9 @@
 import { Field, ID, Int, ObjectType, registerEnumType } from '@nestjs/graphql';
 import { SystemMenuOperationType } from './systemMenu.enum';
+import { Status } from '../../../sw/enums/RecordStatusEnum';
 
 registerEnumType(SystemMenuOperationType, { name: 'SystemMenuOperationType' });
+registerEnumType(Status,{name: 'Status'});
 
 @ObjectType('SystemMenu')
 export class SystemMenuTypes {
@@ -11,8 +13,8 @@ export class SystemMenuTypes {
   @Field()
   name: string;
 
-  @Field({ nullable: true })
-  parentId: number;
+  // @Field({ nullable: true })
+  // parentId: number;
 
   @Field((type) => SystemMenuTypes, { nullable: true })
   parent: SystemMenuTypes;
@@ -33,4 +35,7 @@ export class SystemMenuTypes {
     defaultValue: SystemMenuOperationType.Read,
   })
   operationType: SystemMenuOperationType;
+
+  @Field(type => Status, { defaultValue:Status.Enabled })
+  status: Status;
 }

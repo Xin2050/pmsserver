@@ -11,8 +11,12 @@ import { SystemMenuTypes } from './systemMenu.types';
 import { SystemMenuService } from './systemMenu.service';
 import { SystemMenu } from './systemMenu.entity';
 import { CreateSystemMenuInputs } from './dto/systemMenuInputs';
+import { UseGuards } from '@nestjs/common';
+import { GraphQLAuthGuard } from '../../hr/user/auth/auth.guard';
+
 
 @Resolver((of) => SystemMenuTypes)
+//@UseGuards(GraphQLAuthGuard)
 export class SystemMenuResolver {
   constructor(private systemMenuService: SystemMenuService) {}
 

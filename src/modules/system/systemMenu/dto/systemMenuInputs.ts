@@ -17,7 +17,7 @@ export class CreateSystemMenuInputs {
   name: string;
 
   @Field({ nullable: true })
-  @ValidateIf(o => o.parentId)
+  @ValidateIf(o => o.parent)
   @IsInt()
   parentId: number;
 

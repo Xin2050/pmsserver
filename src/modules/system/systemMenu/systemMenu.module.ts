@@ -6,10 +6,11 @@ import { SystemMenuService } from './systemMenu.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SystemMenu } from './systemMenu.entity';
 
+
 @Module({
   imports: [
     UserModule,
-    TypeOrmModule.forFeature([SystemMenu])
+    TypeOrmModule.forFeature([SystemMenu]),
   ],
   providers: [SystemMenuResolver, SystemMenuService]
 })

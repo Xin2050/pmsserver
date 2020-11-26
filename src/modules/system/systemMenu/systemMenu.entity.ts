@@ -10,7 +10,7 @@ import {
 import { SystemMenuOperationType } from './systemMenu.enum';
 import { Status } from '../../../sw/enums/RecordStatusEnum';
 
-@Entity('SystemMenu')
+@Entity('system_menu')
 export class SystemMenu {
   @PrimaryGeneratedColumn()
   id: number;
