@@ -7,7 +7,7 @@ registerEnumType(Status,{name: 'Status'});
 
 @ObjectType('SystemMenu')
 export class SystemMenuTypes {
-  @Field((type) => Int)
+  @Field((type) => ID)
   id: number;
 
   @Field()

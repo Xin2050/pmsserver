@@ -18,9 +18,6 @@ export class SystemMenu {
   @Column()
   name: string;
 
-  @Column({ type: 'integer', nullable: true })
-  parentId: number;
-
   @Column({ nullable: true })
   router: string;
 
@@ -44,4 +41,8 @@ export class SystemMenu {
     default:Status.Enabled,
   })
   status : Status
+
+  @ManyToOne(()=>SystemMenu, systemMenu => systemMenu.id)
+  @JoinColumn({name:'parentId'})
+  parent: SystemMenu;
 }

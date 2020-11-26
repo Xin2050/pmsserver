@@ -15,6 +15,7 @@ import { UseGuards } from '@nestjs/common';
 import { GraphQLAuthGuard } from '../../hr/user/auth/auth.guard';
 
 
+
 @Resolver((of) => SystemMenuTypes)
 //@UseGuards(GraphQLAuthGuard)
 export class SystemMenuResolver {
@@ -25,10 +26,15 @@ export class SystemMenuResolver {
     return await this.systemMenuService.getAllSystemMenus();
   }
 
+  @Query((returns) => SystemMenuTypes)
+  async getSystemMenu(@Args("id") id:number):Promise<SystemMenu>{
+    return await this.systemMenuService.getSystemMenu(id);
+  }
+
   @ResolveField()
   async parent(@Parent() systemMenu: SystemMenu) {
-    const { parentId } = systemMenu;
-    return await this.systemMenuService.getSystemMenu(parentId);
+    const { parent } = systemMenu;
+    return await this.systemMenuService.getSystemMenu(parent);
   }
 
   @Mutation((returns) => SystemMenuTypes)
