@@ -1,7 +1,7 @@
 import {
   Column,
   Entity,
-  JoinColumn,
+  JoinColumn, JoinTable, ManyToMany,
   ManyToOne,
   OneToMany,
   OneToOne,
@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 import { SystemMenuOperationType } from './systemMenu.enum';
 import { Status } from '../../../sw/enums/RecordStatusEnum';
+import { Roles } from '../roles/entities/roles.entity';
 
 @Entity('system_menu')
 export class SystemMenu {
@@ -45,4 +46,10 @@ export class SystemMenu {
   @ManyToOne(()=>SystemMenu, systemMenu => systemMenu.id)
   @JoinColumn({name:'parentId'})
   parent: SystemMenu;
+
+  @ManyToMany(type=>Roles,roles=>roles.systemMenus)
+  @JoinTable({
+    name:"systemMenu_roles"
+  })
+  roles: Roles[];
 }

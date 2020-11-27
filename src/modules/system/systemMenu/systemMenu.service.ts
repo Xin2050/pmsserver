@@ -51,4 +51,10 @@ export class SystemMenuService {
     return await this.systemMenuRepository.save(systemMenu);
 
   }
+
+  async getSystemMenusByIds (ids:number[]):Promise<SystemMenu[]> {
+    return await this.systemMenuRepository.findByIds(ids)
+  }
+
+
 }

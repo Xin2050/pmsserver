@@ -1,6 +1,7 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Status } from '../../../../sw/enums/RecordStatusEnum';
 import { ProjectAccessLevel } from '../../../../sw/enums/ProjectEnums';
+import { SystemMenu } from '../../systemMenu/systemMenu.entity';
 
 @Entity('roles')
 export class Roles {
@@ -28,4 +29,7 @@ export class Roles {
   })
   status : Status;
 
+  @ManyToMany(type=>SystemMenu,
+      systemMenu=>systemMenu.roles)
+  systemMenus: SystemMenu[]
 }

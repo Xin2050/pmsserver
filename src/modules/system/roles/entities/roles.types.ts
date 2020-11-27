@@ -2,6 +2,8 @@ import { Field, ID, ObjectType, registerEnumType } from '@nestjs/graphql';
 import { ProjectAccessLevel } from '../../../../sw/enums/ProjectEnums';
 import { Status } from '../../../../sw/enums/RecordStatusEnum';
 import { SysCompanyTypes } from '../../syscompany/entities/syscompany.types';
+import { SystemMenu } from '../../systemMenu/systemMenu.entity';
+import { SystemMenuTypes } from '../../systemMenu/systemMenu.types';
 
 
 registerEnumType(ProjectAccessLevel,{name:"ProjectAccessLevel"});
@@ -27,6 +29,8 @@ export class RolesTypes {
 
   @Field(type=>[SysCompanyTypes],
     {nullable:true})
-  sysCompanies: number[]
+  sysCompanies: number[];
 
+  @Field(type=>[SystemMenuTypes],{nullable:true})
+  systemMenus:SystemMenuTypes[];
 }

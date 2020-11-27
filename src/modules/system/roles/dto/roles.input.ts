@@ -26,3 +26,17 @@ export class CreateRolesInput {
   sysCompanies: number[]
 
 }
+
+@InputType()
+export class AssignSystemMenusToRoleInput {
+  @Field(type=>ID)
+  @Type(()=>Number)
+  @IsInt()
+  roleId:number;
+
+  @Field(type=>[ID])
+  @IsArray()
+  @Type(()=>Number)
+  @IsInt({each:true})
+  systemMenuIds:number[]
+}
