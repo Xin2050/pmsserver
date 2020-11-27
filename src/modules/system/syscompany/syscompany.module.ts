@@ -6,6 +6,8 @@ import { SysCompany } from './entities/syscompany.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([SysCompany])],
-  providers: [SysCompanyResolver, SysCompanyService]
+  providers: [SysCompanyResolver, SysCompanyService],
+  exports: [SysCompanyService]
+  
 })
 export class SysCompanyModule {}

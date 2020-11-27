@@ -1,4 +1,5 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Status } from '../../../../sw/enums/RecordStatusEnum';
 
 
 @ObjectType('SysCompany')
@@ -26,4 +27,8 @@ export class SysCompanyTypes {
 
   @Field()
   totalTaxRate: number;
+
+  @Field(type=>Status,
+    {defaultValue:Status.Enabled})
+  status : Status;
 }

@@ -25,6 +25,9 @@ export class SysCompanyService {
   findOne(id: number) {
     return this.sysCompanyRepository.findOne(id)
   }
+  findCompanies(ids:number[]){
+    return this.sysCompanyRepository.findByIds(ids)
+  }
 
   update(id: number, updateSysCompanyInput: UpdateSysCompanyInput) {
     return `This action updates a #${id} syscompany`;

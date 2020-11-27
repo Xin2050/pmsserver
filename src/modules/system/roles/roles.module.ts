@@ -4,12 +4,14 @@ import { RolesResolver } from './roles.resolver';
 import { RolesService } from './roles.service';
 import { UserModule } from '../../hr/user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { SystemMenu } from '../systemMenu/systemMenu.entity';
+import { SysCompanyModule } from '../syscompany/syscompany.module';
+import { Roles } from './entities/roles.entity';
 
 @Module({
   imports: [
     UserModule,
-    //TypeOrmModule.forFeature([SystemMenu]),
+    SysCompanyModule,
+    TypeOrmModule.forFeature([Roles]),
   ],
   providers: [RolesResolver, RolesService]
 })

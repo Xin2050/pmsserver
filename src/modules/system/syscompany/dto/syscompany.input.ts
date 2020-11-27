@@ -1,5 +1,5 @@
 import { InputType, Field, PartialType } from '@nestjs/graphql';
-import { IsInt, MinLength, ValidateIf } from 'class-validator';
+import { IsInt, IsOptional, MinLength, ValidateIf } from 'class-validator';
 
 @InputType()
 export class CreateSysCompanyInput {
@@ -13,7 +13,8 @@ export class CreateSysCompanyInput {
 
 
   @Field({ nullable: true })
-  @ValidateIf(o=>o.description)
+  @IsOptional()
+  @MinLength(5)
   description: string;
 
   @Field({ nullable: true })
