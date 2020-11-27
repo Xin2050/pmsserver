@@ -1,6 +1,7 @@
 import { Field, ID, InputType } from '@nestjs/graphql';
 import { IsArray, IsIn, IsInt, IsNumber, IsOptional, MinLength, ValidateIf } from 'class-validator';
 import { ProjectAccessLevel } from '../../../../sw/enums/ProjectEnums';
+import { Type } from 'class-transformer';
 
 @InputType()
 export class CreateRolesInput {
@@ -19,6 +20,9 @@ export class CreateRolesInput {
 
   @Field(type=>[ID],{nullable:true})
   @IsOptional()
+  @IsArray()
+  @Type(()=>Number)
+  @IsInt({each:true})
   sysCompanies: number[]
 
 }

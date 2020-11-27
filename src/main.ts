@@ -14,7 +14,7 @@ async function bootstrap() {
     logger.log(`Accepting request from origin ${serverConfig.origin}`);
   }
   const port = process.env.PORT || serverConfig.port;
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe({transform:true}));
   await app.listen(port);
   logger.log(`Application listening on port:${port}`);
 }

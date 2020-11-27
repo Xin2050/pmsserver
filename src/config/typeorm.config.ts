@@ -10,6 +10,6 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   database: process.env.RES_DATABASE || dbConfig.database,
   username: process.env.RES_USERNAME || dbConfig.username,
   password: process.env.RES_PASSWORD || dbConfig.password,
-  entities: [__dirname + '/../**/*.entity.{js,ts}'],
+  entities: [__dirname + '/../**/*.entity.js'],
   synchronize: process.env.RES_ASYNC || dbConfig.synchronize, //check & create or change table from you entities class
 };

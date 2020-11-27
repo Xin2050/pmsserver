@@ -24,9 +24,7 @@ export class RolesResolver {
 
   @Mutation(returns=>RolesTypes)
   async createRole(@Args('createRoleInput') createRolesInput:CreateRolesInput){
-
     return await this.rolesService.createRoles(createRolesInput);
-
   }
 
   @ResolveField()
