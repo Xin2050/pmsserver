@@ -2,6 +2,7 @@ import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { User } from '../user.entity';
+import { FontUser } from '../dto/FontUser';
 
 export const GetUser = createParamDecorator(
   (data, ctx: ExecutionContext): User => {
@@ -13,10 +14,17 @@ export const GetUser = createParamDecorator(
   },
 );
 export const GetValidatedToken = createParamDecorator(
-  (data, ctx: ExecutionContext): User => {
+  (data, ctx: ExecutionContext): FontUser => {
     const req = ctx.switchToHttp().getRequest();
     const vtk = { ...req.user };
-    vtk.user.password = 'Blocked';
+
+    const fontUser:FontUser = {
+      cName:req.user.user.cName,
+      eName:req.user.user.eName,
+      email:req.user.user.email,
+      uid:req.user.user.uid,
+    }
+    vtk.user = fontUser;
     return vtk;
   },
 );

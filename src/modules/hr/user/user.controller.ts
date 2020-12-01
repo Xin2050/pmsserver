@@ -1,6 +1,7 @@
 import {
-  Body,
-  Controller,
+  BadRequestException,
+  Body, ConflictException,
+  Controller, InternalServerErrorException, NotAcceptableException, NotFoundException,
   Post,
   UseGuards,
   ValidationPipe,
@@ -8,8 +9,9 @@ import {
 import { UserService } from './user.service';
 import { AuthCredentialsDto } from './dto/authCredentialsDto';
 import { AuthGuard } from '@nestjs/passport';
-import { GetValidatedToken } from './auth/getUser.decorator';
+import { GetUserID, GetValidatedToken } from './auth/getUser.decorator';
 import { ValidatedToken } from './auth/jwt-payload.interface';
+import { UnknownExportException } from '@nestjs/core/errors/exceptions/unknown-export.exception';
 
 @Controller('auth')
 export class UserController {
@@ -29,12 +31,16 @@ export class UserController {
   signin(
     @Body(ValidationPipe) authCredentialsDto: AuthCredentialsDto,
   ): Promise<{ token }> {
+
     return this.authService.signIn(authCredentialsDto);
   }
 
   @Post('/authCheck')
   @UseGuards(AuthGuard())
-  authCheck(@GetValidatedToken() vtk: ValidatedToken) {
+  authCheck(
+    @GetValidatedToken() vtk: ValidatedToken,
+    //@GetUserID() userid:string //you get act id
+  ) {
     return vtk;
   }
 

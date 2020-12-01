@@ -5,7 +5,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UserRepository } from '../user.repository';
 import * as config from 'config';
 import { JwtPayload, ValidatedToken } from './jwt-payload.interface';
-import { User } from '../user.entity';
 import { JwtService } from '@nestjs/jwt';
 
 const moment = require('moment');
@@ -32,7 +31,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       throw new UnauthorizedException();
     }
     validatedToken.user = user;
-    if (moment().isAfter(moment.unix(exp))) {
+
+    if (moment().isAfter(moment.unix(exp).subtract(8,'hours') )) {
       validatedToken.token = await this.createToken(uid);
     }
     return validatedToken;
