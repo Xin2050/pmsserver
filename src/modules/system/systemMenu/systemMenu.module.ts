@@ -5,7 +5,6 @@ import { SystemMenuResolver } from './systemMenu.resolver';
 import { SystemMenuService } from './systemMenu.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SystemMenu } from './systemMenu.entity';
-import { RolesModule } from '../roles/roles.module';
 
 
 @Module({

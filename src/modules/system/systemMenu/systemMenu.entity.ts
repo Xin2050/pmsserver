@@ -43,9 +43,12 @@ export class SystemMenu {
   })
   status : Status
 
-  @ManyToOne(()=>SystemMenu, systemMenu => systemMenu.id)
+  @ManyToOne(type=>SystemMenu, systemMenu => systemMenu.child)
   @JoinColumn({name:'parentId'})
   parent: SystemMenu;
+
+  @OneToMany(type=>SystemMenu,systemMenu=>systemMenu.parent)
+  child:SystemMenu[];
 
   @ManyToMany(type=>Roles,roles=>roles.systemMenus)
   @JoinTable({

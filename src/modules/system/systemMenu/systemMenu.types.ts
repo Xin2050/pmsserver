@@ -19,6 +19,9 @@ export class SystemMenuTypes {
   @Field((type) => SystemMenuTypes, { nullable: true })
   parent: SystemMenuTypes;
 
+  @Field((type)=>[SystemMenuTypes],{nullable:true})
+  child: SystemMenuTypes[];
+
   @Field({ nullable: true })
   router: string;
 

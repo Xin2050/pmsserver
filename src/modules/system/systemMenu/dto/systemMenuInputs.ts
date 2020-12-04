@@ -1,14 +1,16 @@
-import { Field, InputType, PartialType } from '@nestjs/graphql';
+import { Field, InputType, OmitType, PartialType } from '@nestjs/graphql';
 import {
   IsBoolean,
   IsIn,
-  IsInt,
+  IsInt, IsOptional,
   IsString,
   Length,
   MinLength,
   ValidateIf,
 } from 'class-validator';
 import { SystemMenuOperationType } from '../systemMenu.enum';
+import { Optional } from '@nestjs/common';
+import { Status } from '../../../../sw/enums/RecordStatusEnum';
 
 @InputType()
 export class CreateSystemMenuInputs {
@@ -17,30 +19,30 @@ export class CreateSystemMenuInputs {
   name: string;
 
   @Field({ nullable: true })
-  @ValidateIf(o => o.parent)
+  @Optional()
   @IsInt()
   parentId: number;
 
   @Field({ nullable: true })
-  @ValidateIf(o => o.router)
+  @Optional()
   router: string;
 
   @Field({ nullable: true })
-  @ValidateIf(o => o.icon)
+  @Optional()
   icon: string;
 
   @Field({ nullable: true })
-  @ValidateIf(o => o.orderKey)
+  @Optional()
   @Length(1, 10)
   orderKey: string;
 
   @Field({ nullable: true })
-  @ValidateIf(o => o.directlyAccess)
+  @Optional()
   @IsBoolean()
   directlyAccess: boolean;
 
   @Field({ nullable: true })
-  @ValidateIf(o => o.operationType)
+  @Optional()
   @IsIn(Object.values(SystemMenuOperationType))
   operationType: SystemMenuOperationType;
 }
@@ -49,3 +51,23 @@ export class CreateSystemMenuInputs {
 export class UpdateSystemMenuInputs extends PartialType(
   CreateSystemMenuInputs,
 ) {}
+
+
+@InputType()
+export class GetSystemMenuFilterInput extends PartialType(
+  CreateSystemMenuInputs,
+){
+
+
+  @Field(type=>Status,
+    {defaultValue:Status.Enabled})
+  @IsIn(Object.values(Status))
+  @IsOptional()
+  status: Status;
+
+  @Field({ nullable: true })
+  @IsInt()
+  @IsOptional()
+  id: number;
+
+}
