@@ -1,4 +1,4 @@
-import { Field, InputType, OmitType, PartialType } from '@nestjs/graphql';
+import { Field, InputType, Int, OmitType, PartialType } from '@nestjs/graphql';
 import {
   IsBoolean,
   IsIn,
@@ -59,7 +59,7 @@ export class GetSystemMenuFilterInput extends PartialType(
 ){
 
 
-  @Field(type=>Status,
+  @Field(type=>Int,
     {defaultValue:Status.Enabled})
   @IsIn(Object.values(Status))
   @IsOptional()

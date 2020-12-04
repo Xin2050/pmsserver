@@ -4,6 +4,7 @@ import {SystemMenu} from './systemMenu.entity';
 import {IsNull, Repository} from 'typeorm';
 import {CreateSystemMenuInputs, GetSystemMenuFilterInput} from './dto/systemMenuInputs';
 import {QueryBuilder} from "../../../sw/querybuilder/queryBuilder";
+import { Status } from 'src/sw/enums/RecordStatusEnum';
 
 @Injectable()
 export class SystemMenuService {
@@ -74,7 +75,11 @@ export class SystemMenuService {
 
     async getRootMenu(userId: number): Promise<SystemMenu[]> {
 
-        return await this.systemMenuRepository.find({relations: ["child"], where: {parent:IsNull(),status:"1"}});
+        return await this.systemMenuRepository.find({
+            relations: ["child"],
+            where: {parent:IsNull(),status: Status.Enabled },
+            order:{orderKey:"ASC"}
+        });
 
     }
 
@@ -91,7 +96,7 @@ export class SystemMenuService {
         }
         const query = new QueryBuilder<SystemMenu>(this.systemMenuRepository, "menu");
         if (status === -1) {
-            query.addWhere('menu.status is not null');
+            query.addWhere('menu.status > -1');
         } else {
             query.where({status});
         }

@@ -37,11 +37,8 @@ export class SystemMenu {
   })
   operationType: SystemMenuOperationType;
 
-  @Column('enum',{
-    enum: Status,
-    default:Status.Enabled,
-  })
-  status : Status
+  @Column({default:Status.Enabled})
+  status : number;
 
   @ManyToOne(type=>SystemMenu, systemMenu => systemMenu.child)
   @JoinColumn({name:'parentId'})

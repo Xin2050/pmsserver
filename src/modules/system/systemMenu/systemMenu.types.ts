@@ -39,6 +39,6 @@ export class SystemMenuTypes {
   })
   operationType: SystemMenuOperationType;
 
-  @Field(type => Status, { defaultValue:Status.Enabled })
-  status: Status;
+  @Field(type => Int, { defaultValue:Status.Enabled })
+  status: number;
 }
