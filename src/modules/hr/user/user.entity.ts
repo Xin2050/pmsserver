@@ -1,24 +1,14 @@
-import {
-  BaseEntity,
-  BeforeInsert,
-  Column,
-  CreateDateColumn,
-  Entity,
-  Generated,
-  PrimaryGeneratedColumn,
-  Unique,
-  UpdateDateColumn,
-} from 'typeorm';
+import {BeforeInsert, Column, Entity, Generated, Unique,} from 'typeorm';
+
 import * as bcrypt from 'bcrypt';
+import {EntityBaseTemplate} from "src/sw/template/entity/entity.template";
 
 const faker = require('faker');
 
 @Entity()
 @Unique('emailkey', ['email'])
 @Unique('uidKey', ['uid'])
-export class User extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
+export class User extends EntityBaseTemplate {
 
   @Column()
   @Generated('uuid')
@@ -27,7 +17,8 @@ export class User extends BaseEntity {
   @Column()
   email: string;
 
-  @Column()
+
+  @Column({select:false})
   password: string;
 
   @Column({ nullable: true })
@@ -35,12 +26,6 @@ export class User extends BaseEntity {
 
   @Column({ nullable: true })
   eName: string;
-
-  @CreateDateColumn()
-  createAt: Date;
-
-  @UpdateDateColumn()
-  updateAt: Date;
 
   @BeforeInsert()
   beforeInsert() {

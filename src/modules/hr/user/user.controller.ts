@@ -1,7 +1,7 @@
 import {
-  BadRequestException,
-  Body, ConflictException,
-  Controller, InternalServerErrorException, NotAcceptableException, NotFoundException,
+  Body,
+  Controller,
+  PayloadTooLargeException,
   Post,
   UseGuards,
   ValidationPipe,
@@ -11,7 +11,6 @@ import { AuthCredentialsDto } from './dto/authCredentialsDto';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUserID, GetValidatedToken } from './auth/getUser.decorator';
 import { ValidatedToken } from './auth/jwt-payload.interface';
-import { UnknownExportException } from '@nestjs/core/errors/exceptions/unknown-export.exception';
 
 @Controller('auth')
 export class UserController {
@@ -43,6 +42,9 @@ export class UserController {
   ) {
     return vtk;
   }
-
+  @Post('/test')
+  test(){
+    return new PayloadTooLargeException('PayloadTooLarge');
+  }
 
 }

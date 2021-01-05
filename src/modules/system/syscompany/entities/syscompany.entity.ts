@@ -1,13 +1,10 @@
-import { AfterInsert, AfterLoad, AfterUpdate, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { AfterInsert, AfterLoad, AfterUpdate, Column, Entity, } from 'typeorm';
 import { decimal } from '../../../../utils/Number';
-import { Status } from '../../../../sw/enums/RecordStatusEnum';
+import {EntityBaseTemplate} from "src/sw/template/entity/entity.template";
 
 
 @Entity("sys_company")
-export class SysCompany {
-
-  @PrimaryGeneratedColumn()
-  id: number;
+export class SysCompany extends EntityBaseTemplate{
 
   @Column()
   fullName: string;
@@ -27,12 +24,6 @@ export class SysCompany {
   @Column({type:'decimal',precision:3,scale:2,default:1.10})
   localTaxRate:number;
 
-  @Column('enum',{
-    enum: Status,
-    default:Status.Enabled,
-  })
-  status : Status;
-
   totalTaxRate: number;
 
   @AfterLoad()
@@ -41,7 +32,6 @@ export class SysCompany {
   protected setTotalTaxRate(){
     this.totalTaxRate =  decimal(this.vatRate * this.localTaxRate,4);
   }
-
 
 
 }

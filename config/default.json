@@ -3,11 +3,11 @@
     "port" : 4000
   },
   "db" : {
-    "type" : "postgres",
-    "database" : "pms",
-    "port" : 5432
+    "type" : "mysql",
+    "database" : "newpms",
+    "port" : 3306
   },
   "jwt" : {
-    "expiresIn" : "2 days"
+    "expiresIn" : "20 days"
   }
 }

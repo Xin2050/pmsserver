@@ -22,6 +22,7 @@ export class UserRepository extends Repository<User> {
       const newUser = await user.save();
       return newUser.uid;
     } catch (e) {
+
       if (e.code === '23505') {
         throw new ConflictException('Username already exists!');
       } else {
@@ -32,7 +33,10 @@ export class UserRepository extends Repository<User> {
 
   async signIn(authCredentialsDto: AuthCredentialsDto): Promise<string> {
     const { email, password } = authCredentialsDto;
-    const found = await this.findOne({ email });
+    const found = await this.findOne({
+          select:["email","password","uid"],
+          where:{email,isActive:true}
+    });
     if (!found) {
       return null;
     }
