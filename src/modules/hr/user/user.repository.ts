@@ -10,6 +10,7 @@ import {
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
+
   async createUserForTest(
     authCredentialsDto: AuthCredentialsDto,
   ): Promise<string> {

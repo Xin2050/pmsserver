@@ -1,18 +1,25 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
-
-import { GqlExecutionContext } from '@nestjs/graphql';
 import { User } from '../user.entity';
-import { FontUser } from '../dto/FontUser';
+import {FontUser, UserRelationIds} from '../dto/FontUser';
 
 export const GetUser = createParamDecorator(
   (data, ctx: ExecutionContext): User => {
     const req = ctx.switchToHttp().getRequest();
 
-    const user = { ...req.user.user };
-    user.password = 'Blocked';
-    return user;
+    return { ...req.user.user };
   },
 );
+export const GetUserRelationIds = createParamDecorator(
+    (data,ctx:ExecutionContext): UserRelationIds =>{
+        const user = ctx.switchToHttp().getRequest().user.user;
+        const userRelationIds:UserRelationIds = {
+            id:user.id,
+            role:user.role,
+            company:user.company,
+        }
+        return userRelationIds;
+    }
+)
 export const GetValidatedToken = createParamDecorator(
   (data, ctx: ExecutionContext): FontUser => {
     const req = ctx.switchToHttp().getRequest();
@@ -28,13 +35,12 @@ export const GetValidatedToken = createParamDecorator(
     return vtk;
   },
 );
+
 export const GetUserID = createParamDecorator(
   (data, ctx: ExecutionContext): string =>
     ctx.switchToHttp().getRequest().user.user.id,
 );
-export const GetGQLUserID = createParamDecorator(
-  (data, ctx): void => GqlExecutionContext.create(ctx).getContext().req.user.user.id,
-  //GqlExecutionContext.create(ctx).getContext().req
-);
+
+
 
 

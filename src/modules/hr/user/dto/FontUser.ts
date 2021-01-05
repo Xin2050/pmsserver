@@ -5,3 +5,10 @@ export interface FontUser {
   eName:string;
 
 }
+
+export interface UserRelationIds {
+  id:number;
+  role:number;
+  company:number;
+
+}
